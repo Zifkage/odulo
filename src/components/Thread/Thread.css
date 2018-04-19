@@ -1,0 +1,13 @@
+.Thread {
+    position: relative;
+    padding-top: 100px;
+    width: 45%;
+    margin: auto;
+}
+
+@media (max-width: 450px) {
+    .Thread{
+        width: 100%;
+    }
+}
+

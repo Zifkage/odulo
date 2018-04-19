@@ -1,22 +1,27 @@
 import { createStore, combineReducers } from 'redux'
-const ADD_MESSAGE = 'ADD_MESSAGE';
-const OPEN_THREAD = 'OPEN_TABS';
+import Actions from './actions'
+import uuid from 'uuid';
 
 function activeThreadIdReducer(state = '1-fe3', action){
   switch (action.type){
-    case OPEN_THREAD:
+    case Actions.OPEN_THREAD:
       return action.id;
     default:
       return state;
   }
 }
 
-function messagesReducer(state, action){
+function messagesReducer(state = [], action, messageId){
   switch (action.type){
-    case ADD_MESSAGE: {
+    case Actions.ADD_MESSAGE: {
+      console.log(action.author);
       return [
         ...state,
-        action.text
+        {
+          id: messageId,
+          text: action.text,
+          author: action.author
+        }
       ]
     }
     default:
@@ -26,37 +31,34 @@ function messagesReducer(state, action){
 
 function threadsReducer(state = [
   {
-    id: '1-fe3',
+    threadId: '1-fe3',
     title: 'my first tab',
     lastMessage: 'Hello World',
-    messages: [
-      {
-        id: 1,
-        username: 'Nazif',
-        text: 'Yo men'
-      }
-    ]
+    messages: [],
+    lastNewMessage: ''
   },
   {
-    id: '2-fe56',
+    threadId: '2-fe56',
     title: 'my second tab',
     lastMessage: 'Another last message',
-    messages: []
+    messages: [],
+    lastNewMessage: ''
   }
 ], action) {
   switch (action.type){
-    case ADD_MESSAGE: {
-      const threadIndex = state.find(t => t.id === action.threadId);
+    case Actions.ADD_MESSAGE: {
+      const threadIndex = state.findIndex(t => t.threadId === action.threadId);
       const oldThread = state[threadIndex];
+      const messageId = uuid.v4();
       const newThread = {
         ...oldThread,
-        messages: messagesReducer(state.messages, action)
+        messages: messagesReducer(oldThread.messages, action, messageId)
       };
-      return {
+      return [
         ...state.slice(0, threadIndex),
         newThread,
         ...state.slice(threadIndex + 1, state.length)
-      }
+      ]
     }
     default:
       return state;

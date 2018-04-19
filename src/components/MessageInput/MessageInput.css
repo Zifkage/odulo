@@ -1,0 +1,22 @@
+.MessageInput{
+    position: fixed;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-100%);
+}
+
+.inputp{
+    width: 45%;
+    margin: auto;
+    background-color: white;
+    border-radius: 10px 10px;
+    padding: 4px;
+}
+
+@media (max-width: 450px) {
+    .inputp{
+        width: 100%;
+    }
+}
+

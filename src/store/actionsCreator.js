@@ -1,24 +1,24 @@
-function actionsCreator() {
-  const ADD_MESSAGE = 'ADD_MESSAGE';
-  const OPEN_THREAD = 'OPEN_TABS';
+import Actions from './actions'
 
-  function addMessage(text, threadId) {
+  function addMessage(text, threadId, author) {
     return {
-      type: ADD_MESSAGE,
+      type: Actions.ADD_MESSAGE,
       text,
-      threadId
+      threadId,
+      author
     }
   }
 
-  function openTabs(id){
+  function openThread(id){
     return {
-      type: OPEN_THREAD,
-      id
+      type: Actions.OPEN_THREAD,
+      id: id
     }
   }
 
-  return {
+  const actionsCreator =  {
     addMessage,
-    openTabs
-  }
-}
+    openThread
+  };
+
+  export default actionsCreator;

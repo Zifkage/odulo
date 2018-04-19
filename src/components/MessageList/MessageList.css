@@ -1,0 +1,25 @@
+.MessageListContent{
+    padding-bottom: 40px;
+}
+
+.MessageListContent div{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.MessageListContent span {
+    padding: 10px;
+    word-wrap: break-word;
+    max-width: 70%;
+    display: inline-block;
+    border: solid 3px white;
+    color: white;
+    border-radius: 7px;
+    font-size: .9rem;
+}
+
+.right{
+    position: relative;
+    left: 100%;
+    transform: translateX(-100%);
+}

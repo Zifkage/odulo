@@ -2,11 +2,14 @@ import React from 'react';
 import App from './App';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import './App.css'
 
 
 const WrappedApp = () => (
   <Provider store={store} >
-    <App/>
+    <div className="content">
+      <App/>
+    </div>
   </Provider>
 );
 

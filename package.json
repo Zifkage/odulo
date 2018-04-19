@@ -8,7 +8,10 @@
     "react-dom": "^16.3.1",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
+    "react-scroll": "^1.7.8",
     "redux": "^3.7.2",
+    "sails.io.js": "^1.2.1",
+    "socket.io-client": "^2.1.0",
     "uuid": "^3.2.1"
   },
   "scripts": {
