@@ -23,7 +23,11 @@ const mapStateToTabsProps = (state) => {
 const mapDispatchToTabsProps = (dispatch) => {
   return {
     onClick: (id) => {
-      dispatch(actionsCreator.openThread(id))
+      dispatch(actionsCreator.openThread(id));
+    },
+    onNewThread: (threadId, title) => {
+      dispatch(actionsCreator.addThread(threadId, title));
+      dispatch(actionsCreator.openThread(threadId));
     }
   }
 };

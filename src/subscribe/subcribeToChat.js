@@ -1,7 +1,14 @@
 import io from '../socket';
 
-function subcribeToChat(cb) {
+function subcribeToChatMessage(cb) {
   io.socket.on('message', cb);
 }
 
-export default subcribeToChat;
+function subscribeToChatThread(cb) {
+  io.socket.on('thread', cb);
+}
+
+export default {
+  subcribeToChatMessage,
+  subscribeToChatThread
+};

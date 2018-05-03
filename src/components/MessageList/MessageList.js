@@ -1,7 +1,8 @@
 import React from 'react';
 import './MessageList.css';
 import * as Scroll from 'react-scroll';
-import subcribeToChat from '../../subscribe/subcribeToChat';
+import socketSubscriber from '../../subscribe/subcribeToChat';
+import cookie from 'react-cookies';
 
 // let scroll = Scroll.animateScroll;
 // let scrollSpy = Scroll.scrollSpy;
@@ -11,7 +12,8 @@ class MessageList extends React.Component {
 
 
   componentDidMount(){
-    subcribeToChat((e) => {
+    socketSubscriber.subcribeToChatMessage((e) => {
+      console.log(e.threadId);
       this.props.onMessageSubmit(e.message, e.author, e.threadId);
     });
     
@@ -25,11 +27,11 @@ class MessageList extends React.Component {
     return (
       <div   className="MessageListContent">
         {
-          this.props.thread.map((m, index) => (
+          this.props.messages.map((m, index) => (
             <Element name={'el' + index} key={index}>
               <div >
 
-                <span className={(m.author === window.localStorage.getItem('username')) ? 'right' : ''}>{m.text}</span>
+                <span className={(m.author === cookie.load('username')) ? 'right' : ''}>{m.text}</span>
               </div>
             </Element>
           ))

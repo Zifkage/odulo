@@ -5,5 +5,8 @@ import '../node_modules/now-ui-kit/assets/css/bootstrap.min.css';
 import App from './WrappedApp';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+import { BrowserRouter as Router } from 'react-router-dom'
+
+
+ReactDOM.render(<Router><App/></Router>, document.getElementById('root'));
 registerServiceWorker();

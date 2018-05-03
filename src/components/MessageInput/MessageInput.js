@@ -1,29 +1,13 @@
 import React from 'react';
 import './MessageInput.css';
-import uuid from 'uuid';
 import io from '../../socket';
+import cookie from 'react-cookies';
 
 class MessageInput extends React.Component {
 
   state = {
-    value: '',
-    l: undefined
+    value: ''
   };
-
-  l;
-
-  componentDidMount(){
-    window.localStorage.setItem('username', 'user'+uuid.v4());
-    io.socket.get('/user/join', (body, JWR) => {
-
-      console.log('[did] and with status code: ', JWR.statusCode);
-    });
-
-  }
-
-
-
-
 
   onChangeHandler = (e) => {
     this.setState({
@@ -34,20 +18,26 @@ class MessageInput extends React.Component {
 
   onSubmit = () => {
 
-    this.props.onMessageSubmit(this.state.value, window.localStorage.getItem('username'), this.props.threadId);
+    this.props.onMessageSubmit(this.state.value, cookie.load('username'), this.props.thread.threadId);
+    // const threadTitle = this.props.thread.title;
+    // const text = this.state.value;
+    // const props = this.props;
+      console.log(cookie.load('token'));
 
-    io.socket.post(
-      '/user/message',
-      {
-        message: this.state.value,
-        author: window.localStorage.getItem('username'),
-        threadId:  this.props.threadId
-      },
-      (body, JWR) => {
-      console.log('and with status code: ', JWR.statusCode);
-    });
+
+      io.socket.post(
+        '/message/sendMessage',
+        {
+          message: this.state.value,
+          author: cookie.load('username'),
+          receiver:  this.props.thread.title
+        },
+        (bodyM, JWR) => {
+          console.log('and with status code: ', JWR.statusCode);
+        });
 
     this.setState({value: ''});
+
 
   };
 

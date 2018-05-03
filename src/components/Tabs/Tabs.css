@@ -1,15 +1,9 @@
-.Tabs{
-    position: fixed;
-    top: 100px;
-    height: 70%;
-    border: solid 2px black;
-    overflow-y: scroll;
+.tab-tool{
     width: 25%;
-    font-size: .9rem;
+    position: fixed;
+    background-color: white;
 }
 
-@media (max-width: 450px) {
-    .Tabs{
-        display: none;
-    }
+.list-group .item{
+    padding-top: 30px;
 }

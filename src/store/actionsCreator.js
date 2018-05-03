@@ -9,6 +9,14 @@ import Actions from './actions'
     }
   }
 
+  function addThread(threadId, title){
+    return{
+      type: Actions.ADD_THREAD,
+      threadId,
+      title
+    }
+  }
+
   function openThread(id){
     return {
       type: Actions.OPEN_THREAD,
@@ -16,9 +24,19 @@ import Actions from './actions'
     }
   }
 
+  function updateThreadId(oldId, newId){
+    return{
+      type: Actions.UPDATE_THREAD_ID,
+      oldId,
+      newId
+    }
+  }
+
   const actionsCreator =  {
     addMessage,
-    openThread
+    openThread,
+    addThread,
+    updateThreadId
   };
 
   export default actionsCreator;

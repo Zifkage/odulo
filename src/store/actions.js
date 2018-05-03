@@ -1,9 +1,13 @@
 const ADD_MESSAGE = 'ADD_MESSAGE';
+const ADD_THREAD = 'ADD_THREAD';
+const UPDATE_THREAD_ID = 'UPDATE_THREAD_ID';
 const OPEN_THREAD = 'OPEN_THREAD';
 
 const actions = {
   ADD_MESSAGE,
-  OPEN_THREAD
+  ADD_THREAD,
+  OPEN_THREAD,
+  UPDATE_THREAD_ID
 };
 
 export default actions;
