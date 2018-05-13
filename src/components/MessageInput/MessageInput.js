@@ -1,7 +1,7 @@
 import React from 'react';
 import './MessageInput.css';
-import io from '../../socket';
 import cookie from 'react-cookies';
+import Client from '../../Client/Client';
 
 class MessageInput extends React.Component {
 
@@ -18,23 +18,11 @@ class MessageInput extends React.Component {
 
   onSubmit = () => {
 
-    this.props.onMessageSubmit(this.state.value, cookie.load('username'), this.props.thread.threadId);
-    // const threadTitle = this.props.thread.title;
-    // const text = this.state.value;
-    // const props = this.props;
-      console.log(cookie.load('token'));
+    this.props.onMessageSubmit(this.state.value, cookie.load('id'), this.props.thread.id);
 
-
-      io.socket.post(
-        '/message/sendMessage',
-        {
-          message: this.state.value,
-          author: cookie.load('username'),
-          receiver:  this.props.thread.title
-        },
-        (bodyM, JWR) => {
-          console.log('and with status code: ', JWR.statusCode);
-        });
+    Client.postMessage(this.state.value, cookie.load('token'), this.props.thread.title, function (body, JWR) {
+      console.log('[Client.postMessage] status code: ', JWR.statusCode);
+    });
 
     this.setState({value: ''});
 

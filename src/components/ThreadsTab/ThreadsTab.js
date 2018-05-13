@@ -6,11 +6,12 @@ import { connect } from 'react-redux';
 import  Tabs from '../Tabs/Tabs';
 
 const mapStateToTabsProps = (state) => {
+  console.log(state);
   const tabs = state.threads.map(t => {
     return {
-      id: t.threadId,
+      id: t.id,
       title: t.title,
-      active: t.threadId === state.activeThreadId,
+      active: t.id === state.activeThreadId,
       lastMessage: t.lastMessage
     }
   });
@@ -22,12 +23,15 @@ const mapStateToTabsProps = (state) => {
 
 const mapDispatchToTabsProps = (dispatch) => {
   return {
-    onClick: (id) => {
+    onTabClick: (id) => {
       dispatch(actionsCreator.openThread(id));
     },
-    onNewThread: (threadId, title) => {
-      dispatch(actionsCreator.addThread(threadId, title));
-      dispatch(actionsCreator.openThread(threadId));
+    onNewThread: (threads, byAuthor) => {
+      dispatch(actionsCreator.addThreads(threads));
+      if(threads.length === 1 && byAuthor){
+        dispatch(actionsCreator.openThread(threads[0].id));
+      }
+
     }
   }
 };

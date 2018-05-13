@@ -17,10 +17,54 @@ const fetchUser = (q, cb) => {
     q
   }, function (body, JWR) {
     cb(body, JWR);
-  })
+  });
+};
+
+const fetchMessagesThreads = (t, cb) => {
+  io.socket.get('/messageThread/getThreads', {
+    t
+  }, function(body, JWR){
+    for (let i = 0; i < body.length; i++){
+      delete body[i].createdAt;
+      delete body[i].updatedAt;
+      delete body[i].user;
+      console.log(body);
+    }
+    cb(body, JWR);
+  });
+};
+
+const postMessage = (message, token, receiver, cb) => {
+  io.socket.post(
+    '/message/sendMessage',
+    {
+      message: message,
+      token: token,
+      receiver:  receiver
+    },
+    (body, JWR) => {
+      cb(body, JWR)
+    });
+};
+
+const postThread = (token, username, cb) => {
+
+  io.socket.post(
+    '/messageThread/newThread',
+    {
+      token: token,
+      title: username
+    },
+    (body, JWR) => {
+      cb(body, JWR);
+    }
+  );
 };
 
 export default {
   login,
-  fetchUser
+  fetchUser,
+  fetchMessagesThreads,
+  postMessage,
+  postThread
 };

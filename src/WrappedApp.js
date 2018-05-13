@@ -23,5 +23,4 @@ const WrappedApp = () => (
 );
 
 
-
 export default WrappedApp;

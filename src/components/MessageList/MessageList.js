@@ -31,7 +31,7 @@ class MessageList extends React.Component {
             <Element name={'el' + index} key={index}>
               <div >
 
-                <span className={(m.author === cookie.load('username')) ? 'right' : ''}>{m.text}</span>
+                <span className={(m.author === parseInt(cookie.load('id'), 0)) ? 'right' : ''}>{m.text}</span>
               </div>
             </Element>
           ))

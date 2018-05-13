@@ -19,7 +19,7 @@ function messagesReducer(state = [], action){
         {
           id: uuid.v4(),
           text: action.text,
-          author: action.author
+          author:  parseInt(action.author, 0)
         }
       ]
     }
@@ -38,7 +38,7 @@ function messagesReducer(state = [], action){
 function threadsReducer(state = [], action) {
   switch (action.type){
     case Actions.ADD_MESSAGE: {
-      const threadIndex = state.findIndex(t => t.threadId === action.threadId);
+      const threadIndex = state.findIndex(t => t.id === action.threadId);
       const oldThread = state[threadIndex];
       const newThread = {
         ...oldThread,
@@ -51,17 +51,12 @@ function threadsReducer(state = [], action) {
       ]
     }
     case Actions.ADD_THREAD: {
-      const newThread = [{
-        threadId: action.threadId,
-        title: action.title,
-        lastMessage: '',
-        messages: []
-      }];
+      const newThread = [...action.threads];
 
       return state.concat(newThread)
     }
     case Actions.UPDATE_THREAD_ID: {
-      const threadIndex = state.findIndex(t => t.threadId === action.oldId);
+      const threadIndex = state.findIndex(t => t.id === action.oldId);
       const oldThread = state[threadIndex];
       const newThread = {
         ...oldThread,

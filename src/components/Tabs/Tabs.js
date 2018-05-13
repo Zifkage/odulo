@@ -4,6 +4,8 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import NewMessage from '../NewMessage/NewMessage';
 import Modal from '../UI/Modal/Modal';
 import socketSubcriber from '../../subscribe/subcribeToChat'
+import Client from '../../Client/Client';
+import cookie from 'react-cookies';
 
 const style = {
   width: '25%',
@@ -26,10 +28,17 @@ class Tabs extends React.Component{
   };
 
   componentDidMount(){
-    socketSubcriber.subscribeToChatThread((e) => {
-      console.log(e.threadId);
-      this.props.onNewThread(e.threadId, e.title);
-    })
+
+    const props = this.props;
+    Client.fetchMessagesThreads(cookie.load('token'), function (body) {
+
+      props.onNewThread(body, false);
+      socketSubcriber.subscribeToChatThread((e) => {
+        console.log(e.threadId);
+        props.onNewThread([{threadId: e.threadId, title: e.title}], false);
+      });
+    });
+
   }
 
   render(){
@@ -42,7 +51,12 @@ class Tabs extends React.Component{
         {
           this.state.newMessageMode ? (
             <Modal close={this.close} >
-              <NewMessage closeModal={this.close}/>
+              <NewMessage
+                onNewThread={this.props.onNewThread}
+                onpenTab={this.props.onTabClick}
+                tabs={this.props.tabs}
+                closeModal={this.close}
+              />
             </Modal>
           ) : null
         }
@@ -56,7 +70,8 @@ class Tabs extends React.Component{
               <a key={t.id}
                  onClick={(e) => {
                    e.preventDefault();
-                   this.props.onClick(t.id);
+                   console.log(t.id);
+                   this.props.onTabClick(t.id);
                  }}
                  href=""
                  className={ t.active ?

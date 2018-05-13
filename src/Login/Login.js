@@ -46,12 +46,13 @@ class Login extends React.Component{
 
       const username = response.username;
       const token = response.token;
+      const id = response.id;
 
-      // window.localStorage.setItem('username', username);
-      // window.localStorage.setItem('token', token);
+      console.log(response.id);
 
       cookie.save('username', username, { path: '/'});
       cookie.save('token', token, { path: '/'});
+      cookie.save('id', id, { path: '/'});
 
       this.setState({loginInProgress: false});
       this.setState({shouldRedirect: true});
